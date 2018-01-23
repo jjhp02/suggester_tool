@@ -14,7 +14,7 @@ from sklearn.feature_selection import RFECV
 from classifier import train_rbf_svm
 
 USER_PATH = expanduser('~')
-SUGGESTER_PATH = join(USER_PATH, 'suggester_project/tool/suggester')
+SUGGESTER_PATH = join(USER_PATH, 'suggester_tool/tool/suggester')
 
 class Suggester():
 

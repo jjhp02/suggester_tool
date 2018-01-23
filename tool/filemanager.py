@@ -6,7 +6,7 @@ from os.path import join
 import uuid
 
 USER_PATH = expanduser('~')
-PROJECT_PATH = join(USER_PATH, 'suggester_project/')
+PROJECT_PATH = join(USER_PATH, 'suggester_tool/')
 CLASSIFIED_DATA_DIRECTORY = join(PROJECT_PATH, 'classified_data')
 PREDICTED_DATA_DIRECTORY = join(PROJECT_PATH, 'predicted_data')
 UNCLASSIFIED_DATA_DIRECTORY = join(PROJECT_PATH, 'unclassified_data')
