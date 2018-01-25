@@ -8,7 +8,7 @@ from . import views
 # Add urls to your views here.
 
 urlpatterns = [
-	url(r'^test/$', views.test, name='test'),
+    url(r'^test/$', views.test, name='test'),
     url(r'^test2/$', views.test_2, name='test2'),
     url(r'^test3/$', views.test_3, name='test3'),
     url(r'^$', views.index, name='tool_index'),
@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^view/plans/form/$', views.post_measurement_plan, name='post_measurement_plan'),
     url(r'^view/prediction/(?P<pk>[0-9]+)/$', views.prediction_view, name='prediction_view'),
     url(r'^view/suggestions/$', views.suggestions, name='suggestions_all'),
+    url(r'^view/suggestions/form/$', views.suggestion_form, name='suggestion_form'),
     url(r'^view/tasks/(?P<task_id>[-\w]+)/wait/$', views.wait_task, name='wait_task_view'),
     url(r'^view/tasks/success/$', views.completed_task, name='completed_task_view'),
 ]

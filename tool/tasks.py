@@ -93,7 +93,7 @@ def suggest_task():
         new_mp = suggestermanager.measurement_plan_from_suggestion(
             unnecessary_features, suggester.measurement_plan)
         X, y = load_svmlight_file(suggester.classifier_model.training_file)
-        X = _filter_data_for_measurement_plan(X, features, new_mp.get_features_names())
+        X = _filter_data_for_measurement_plan(X, current_measurement_plan.get_features_names(), new_mp.get_features_names())
         new_training_file = get_new_filename_for_classified_data()
         dump_svmlight_file(X, y, new_training_file)
         svc_model = suggestermanager.model_selection(new_training_file)

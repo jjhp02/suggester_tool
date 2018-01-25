@@ -16,5 +16,5 @@ class ModelSelectionForm(forms.Form):
 
 class SuggestionForm(forms.Form):
     measurement_plan = forms.ModelChoiceField(queryset=MeasurementPlan.objects.all())
-    model = forms.ModelChoiceField(queryset=MeasurementPlan.objects.all())
+    model = forms.ModelChoiceField(queryset=SVCModel.objects.all())
     unclassified_file = forms.FileField()

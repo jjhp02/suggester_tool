@@ -19,6 +19,7 @@ from .filemanager import handle_training_file_upload
 from .filemanager import handle_unclassified_file_upload
 from .forms import MeasurementPlanForm
 from .forms import ModelSelectionForm
+from .forms import SuggestionForm
 from .modelmanager import get_measurement_plan
 from .modelmanager import get_measurement_plan_family_predictions
 from .modelmanager import get_latest_classifiers
@@ -30,6 +31,7 @@ from .modelmanager import get_feature_selection
 from .modelmanager import save_measurement_file
 from .modelmanager import save_measurement_plan_from_json
 from .tasks import model_selection_task
+from .tasks import suggest_task
 
 # modelmanager
 from .modelmanager import save_measurement_file
@@ -219,17 +221,18 @@ def suggestion_form(request):
     if request.method == 'POST':
         form = SuggestionForm(request.POST, request.FILES)
         if form.is_valid():
-            file = handle_unclassified_file_upload(request.FILES['training_file'])
+            file = handle_unclassified_file_upload(request.FILES['unclassified_file'])
             mp = form.cleaned_data['measurement_plan']
             model = form.cleaned_data['model']
             set_current_classifier(model)
-            set_current_measurement_plan(measurement_plan)
-            save_measurement_file(file, measurement_plan)
+            set_current_measurement_plan(mp)
+            save_measurement_file(file, mp)
             result = suggest_task.delay()
             return redirect('wait_task_view', result.id)
+            # return redirect('tool_index')
     else:
         form = SuggestionForm()
-    return render(request, 'tool/upload_form.html', {'form': form})
+    return render(request, 'tool/upload_file.html', {'form': form})
 
 def wait_task(request, task_id):
     template = loader.get_template('tool/wait_task.html')
