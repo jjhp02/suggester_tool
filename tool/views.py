@@ -27,6 +27,7 @@ from .modelmanager import get_latest_suggestions
 from .modelmanager import get_prediction_data
 from .modelmanager import get_svc_model
 from .modelmanager import get_feature_selection
+from .modelmanager import save_measurement_file
 from .modelmanager import save_measurement_plan_from_json
 from .tasks import model_selection_task
 
@@ -213,6 +214,22 @@ def suggestions(request):
         'suggestions': template_suggestions
     }
     return HttpResponse(template.render(context, request))
+
+def suggestion_form(request):
+    if request.method == 'POST':
+        form = SuggestionForm(request.POST, request.FILES)
+        if form.is_valid():
+            file = handle_unclassified_file_upload(request.FILES['training_file'])
+            mp = form.cleaned_data['measurement_plan']
+            model = form.cleaned_data['model']
+            set_current_classifier(model)
+            set_current_measurement_plan(measurement_plan)
+            save_measurement_file(file, measurement_plan)
+            result = suggest_task.delay()
+            return redirect('wait_task_view', result.id)
+    else:
+        form = SuggestionForm()
+    return render(request, 'tool/upload_form.html', {'form': form})
 
 def wait_task(request, task_id):
     template = loader.get_template('tool/wait_task.html')

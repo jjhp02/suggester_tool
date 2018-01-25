@@ -3,6 +3,9 @@ from __future__ import unicode_literals
 
 from django import forms
 
+from .models import MeasurementPlan
+from .models import SVCModel
+
 # Create your forms here.
 
 class MeasurementPlanForm(forms.Form):
@@ -10,3 +13,8 @@ class MeasurementPlanForm(forms.Form):
 
 class ModelSelectionForm(forms.Form):
     training_file = forms.FileField()
+
+class SuggestionForm(forms.Form):
+    measurement_plan = forms.ModelChoiceField(queryset=MeasurementPlan.objects.all())
+    model = forms.ModelChoiceField(queryset=MeasurementPlan.objects.all())
+    unclassified_file = forms.FileField()
